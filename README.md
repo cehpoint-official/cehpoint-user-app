@@ -1,2 +1,2 @@
-# cehpoint User App
+# Cehpoint User App
 
