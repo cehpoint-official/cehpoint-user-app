@@ -1,7 +1,8 @@
 import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { Button, Checkbox, Image } from "native-base";
-import React from "react";
+import React, {useState} from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   StatusBar,
   StyleSheet,
@@ -9,10 +10,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-function Que3NewStudent({ navigation }) {
+function Que3NewStudent(navigation) {
   const insets = useSafeAreaInsets();
+  //states
+  const [onlineComfortable, setOnlineComfortable] = useState(null);
+
   return (
     <View
       style={[
@@ -73,6 +76,7 @@ function Que3NewStudent({ navigation }) {
           <Button style={{ backgroundColor: "#D4C00B", fontWeight: "400" }}>
             <Checkbox
               style={{ borderColor: "black", backgroundColor: "transparent" }}
+              onChange={()=>setOnlineComfortable(true)}
             >
               Yes
             </Checkbox>
@@ -80,6 +84,7 @@ function Que3NewStudent({ navigation }) {
           <Button style={{ backgroundColor: "#D4C00B", fontWeight: "400" }}>
             <Checkbox
               style={{ borderColor: "black", backgroundColor: "transparent" }}
+              onChange={()=>setOnlineComfortable(false)}
             >
               No
             </Checkbox>
@@ -96,7 +101,15 @@ function Que3NewStudent({ navigation }) {
               borderRadius: 10,
               marginTop: 20,
             }}
-            onPress={() => navigation.navigate("student-form")}
+            onPress={() => {
+              const packet = {
+                'courseInterested': navigation.route.params.courseInterested,
+                'parentSupport': navigation.route.params.parentSupport,
+                onlineComfortable
+              };
+              navigation.navigation.navigate("student-form", {...packet});
+              }
+            }
           >
             <FontAwesomeIcon
               style={{

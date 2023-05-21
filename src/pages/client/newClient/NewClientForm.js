@@ -8,12 +8,81 @@ import {
   ScrollView,
   Select,
 } from "native-base";
-import React from "react";
-import { StatusBar, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Alert, StatusBar, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 function NewClientForm({ navigation }) {
   const insets = useSafeAreaInsets();
+
+  //states
+  const [representativeName, setName] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [address, setAddress] = useState('');
+  const [requirement, setRequirement] = useState('');
+  const [deadline, setDeadline] = useState('');
+  const [source, setSource] = useState('');
+  const [budget, setBudget] = useState('');
+
+  async function callAPI(){
+    const url = 'http://127.0.0.1:5000/newclientdetails';
+    
+    const phoneRegex = /^[0-9]{10}$/;
+    const budgetRegex = /^[0-9]+(\.[0-9]+)?$/;
+
+    if (!phoneRegex.test(phoneNumber)) {
+      Alert.alert("Invalid phone number");
+      return;
+    }
+    else if (!budgetRegex.test(budget)) {
+      Alert.alert("Invalid budget");
+      return;
+    }
+
+    const packet = {
+      "representative_name": representativeName,
+      "company_name": companyName,
+      "phone_number": phoneNumber,
+      email,
+      address,
+      requirement,
+      deadline,
+      source,
+      budget
+    };
+
+    let res = null;
+    try{
+      res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(packet)
+      });
+    } catch (e) {
+      console.warn('no connection');
+      return;
+    }
+    
+    if(!res.ok){
+      console.log('internal server error');
+      return;
+    }
+
+    try {
+      let request_key = await res.json();
+      if(request_key?.key){
+        navigation.navigate("client-id", {'request_key': request_key.key});
+        return;
+      }
+    } catch (e){
+      console.log('internal server error', e)
+    }
+  }
+
   return (
     <ScrollView
       style={[
@@ -52,46 +121,48 @@ function NewClientForm({ navigation }) {
         <Box alignItems="center">
           <FormControl>
             <FormControl style={{ color: "black", paddingBottom: 5 }}>
-              Name
+              Representative Name
             </FormControl>
-            <Input type="text" />
+            <Input type="text" onChangeText={(val)=>setName(val)}/>
           </FormControl>
           <FormControl>
             <FormControl style={{ color: "black", paddingBottom: 5 }}>
               Company Name
             </FormControl>
-            <Input type="text" />
+            <Input type="text" onChangeText={(val)=>setCompanyName(val)}/>
           </FormControl>
           <FormControl>
             <FormControl style={{ color: "black", paddingBottom: 5 }}>
               Phone Number
             </FormControl>
-            <Input type="number" />
+            <Input type="number" onChangeText={(val)=>setPhoneNumber(val)}/>
           </FormControl>
           <FormControl>
             <FormControl style={{ color: "black", paddingBottom: 5 }}>
-              Email Id
+              Email ID
             </FormControl>
-            <Input type="email" />
+            <Input type="email" onChangeText={(val)=>setEmail(val)}/>
           </FormControl>
           <FormControl>
             <FormControl style={{ color: "black", paddingBottom: 5 }}>
               Address
             </FormControl>
-            <Input type="text" />
+            <Input type="text" onChangeText={(val)=>setAddress(val)}/>
           </FormControl>
           <FormControl>
             <FormControl style={{ color: "black", paddingBottom: 5 }}>
-              Your Learning Interest
+              Explain your requirement
             </FormControl>
-            <Input type="text" />
+            <Input type="text" onChangeText={(val)=>setRequirement(val)}/>
           </FormControl>
-          <FormControl>
+          <FormControl style={{ color: "black", paddingBottom: 5 }}>
+              What will be the project finish Deadline if we start working on your project next Monday?
+            <Input type="text" onChangeText={(val)=>setDeadline(val)}/>
+          </FormControl>
             <FormControl style={{ color: "black", paddingBottom: 5 }}>
-              Your Future Goats
+              What's your budget for this project? (optional)
+              <Input type="text" onChangeText={(val)=>setBudget(val)}/>
             </FormControl>
-            <Input type="text" />
-          </FormControl>
           <FormControl isRequired>
             <FormControl style={{ color: "black", paddingBottom: 5 }}>
               How did you hear about us
@@ -103,6 +174,8 @@ function NewClientForm({ navigation }) {
               }}
               mt="1"
               // style={{ borderWidth: 1 }}
+              value={source}
+              onValueChange={(itemValue, itemIndex)=> setSource(itemValue)}
             >
               <Select.Item label="Google" value="Google" />
               <Select.Item label="Friends" value="Friends" />
@@ -121,7 +194,7 @@ function NewClientForm({ navigation }) {
             marginBottom: 50,
           }}
           size="sm"
-          onPress={() => navigation.navigate("client-id")}
+          onPress={callAPI}
         >
           <Text
             style={{

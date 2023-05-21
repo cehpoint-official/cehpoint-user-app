@@ -1,7 +1,7 @@
 import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { Button, Checkbox, Image } from "native-base";
-import React from "react";
+import React, {useState} from "react";
 import {
   StatusBar,
   StyleSheet,
@@ -11,8 +11,11 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-function Que2NewStudent({ navigation }) {
+function Que2NewStudent(navigation) {
   const insets = useSafeAreaInsets();
+  //state
+  const [parentSupport, setParentSupport] = useState(null);
+
   return (
     <View
       style={[
@@ -73,6 +76,7 @@ function Que2NewStudent({ navigation }) {
           <Button style={{ backgroundColor: "#D4C00B", fontWeight: "400" }}>
             <Checkbox
               style={{ borderColor: "black", backgroundColor: "transparent" }}
+              onChange={()=>setParentSupport(true)}
             >
               Yes
             </Checkbox>
@@ -80,6 +84,7 @@ function Que2NewStudent({ navigation }) {
           <Button style={{ backgroundColor: "#D4C00B", fontWeight: "400" }}>
             <Checkbox
               style={{ borderColor: "black", backgroundColor: "transparent" }}
+              onChange={()=>setParentSupport(false)}
             >
               No
             </Checkbox>
@@ -96,7 +101,14 @@ function Que2NewStudent({ navigation }) {
               borderRadius: 10,
               marginTop: 20,
             }}
-            onPress={() => navigation.navigate("student-que3")}
+            onPress={() => {
+              const packet = {
+                'courseInterested': navigation.route.params.courseInterested,
+                parentSupport
+              };
+              navigation.navigation.navigate("student-que3", {...packet});
+              }
+            }
           >
             <FontAwesomeIcon
               style={{

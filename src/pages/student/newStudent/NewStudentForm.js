@@ -9,12 +9,69 @@ import {
   Select,
   StatusBar,
 } from "native-base";
-import React from "react";
+import React, {useState} from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-function NewStudentFrom({ navigation }) {
+function NewStudentFrom(navigation) {
   const insets = useSafeAreaInsets();
+  //states
+  const [name, setName] = useState('');
+  const [guardianName, setGuardianName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [address, setAddress] = useState('');
+  const [interest, setInterest] = useState('');
+  const [goals, setGoals] = useState('');
+  const [source, setSource] = useState(null);
+
+  async function callAPI(){
+    const url = 'http://127.0.0.1:5000/newstudentdetails';
+    
+    const params = navigation.route.params;
+    const packet = {
+      name,
+      guardianName,
+      phoneNumber,
+      email,
+      address,
+      interest,
+      goals,
+      source,
+      ...params
+    };
+
+    let res = null;
+    try{
+      res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(packet)
+      });
+    } catch (e) {
+      console.warn('no connection');
+      return;
+    }
+    
+    if(!res.ok){
+      console.log('internal server error');
+      return;
+    }
+
+    try {
+      let request_key = await res.json();
+      if(request_key?.key){
+        navigation.navigation.navigate("prospect-id", {request_key: request_key.key});
+        return;
+      }
+    } catch (e){
+      console.log('internal server error')
+    }
+  }
+
+
   return (
     <ScrollView
       style={[
@@ -55,43 +112,43 @@ function NewStudentFrom({ navigation }) {
             <FormControl style={{ color: "black", paddingBottom: 5 }}>
               Name
             </FormControl>
-            <Input type="text" />
+            <Input type="text" onChangeText={text=>setName(text)}/>
           </FormControl>
           <FormControl>
             <FormControl style={{ color: "black", paddingBottom: 5 }}>
               Guardian Name
             </FormControl>
-            <Input type="text" />
+            <Input type="text" onChangeText={text=>setGuardianName(text)}/>
           </FormControl>
           <FormControl>
             <FormControl style={{ color: "black", paddingBottom: 5 }}>
               Phone Number
             </FormControl>
-            <Input type="number" />
+            <Input type="number" onChangeText={text=>setPhoneNumber(text)}/>
           </FormControl>
           <FormControl>
             <FormControl style={{ color: "black", paddingBottom: 5 }}>
               Email Id
             </FormControl>
-            <Input type="email" />
+            <Input type="email" onChangeText={text=>setEmail(text)}/>
           </FormControl>
           <FormControl>
             <FormControl style={{ color: "black", paddingBottom: 5 }}>
               Address
             </FormControl>
-            <Input type="text" />
+            <Input type="text" onChangeText={text=>setAddress(text)}/>
           </FormControl>
           <FormControl>
             <FormControl style={{ color: "black", paddingBottom: 5 }}>
               Your Learning Interest
             </FormControl>
-            <Input type="text" />
+            <Input type="text" onChangeText={text=>setInterest(text)}/>
           </FormControl>
           <FormControl>
             <FormControl style={{ color: "black", paddingBottom: 5 }}>
-              Your Future Goats
+              Your Future Goals
             </FormControl>
-            <Input type="text" />
+            <Input type="text" onChangeText={text=>setGoals(text)}/>
           </FormControl>
           <FormControl isRequired>
             <FormControl style={{ color: "black", paddingBottom: 5 }}>
@@ -106,6 +163,8 @@ function NewStudentFrom({ navigation }) {
               }}
               mt="1"
               // style={{ borderWidth: 1 }}
+              value={source}
+              onValueChange={(itemValue, itemIndex)=> setSource(itemValue)}
             >
               <Select.Item label="Google" value="Google" />
               <Select.Item label="Friends" value="Friends" />
@@ -124,7 +183,7 @@ function NewStudentFrom({ navigation }) {
             marginBottom: 60,
           }}
           size="sm"
-          onPress={() => navigation.navigate("prospect-id")}
+          onPress={callAPI}
         >
           <Text
             style={{

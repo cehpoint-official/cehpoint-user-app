@@ -5,8 +5,10 @@ import React from "react";
 import { StatusBar, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-function NewCLientId({ navigation }) {
+function NewCLientId(navigation) {
   const insets = useSafeAreaInsets();
+  const request_key = navigation.route.params.request_key;
+  
   return (
     <View
       style={[
@@ -80,10 +82,10 @@ function NewCLientId({ navigation }) {
               icon={faCopy}
             />
           }
-          onPress={() => navigation.navigate("form-client-id")}
+          onPress={() => navigation.navigation.navigate("form-client-id")}
         >
           <View style={{ display: "flex", justifyContent: "space-around" }}>
-            <Text style={{ fontWeight: "400", fontSize: 22 }}>CEH12345</Text>
+            <Text style={{ fontWeight: "400", fontSize: 22 }}>{request_key}</Text>
           </View>
         </Button>
         <Text

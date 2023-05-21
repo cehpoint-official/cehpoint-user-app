@@ -1,7 +1,7 @@
 import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { Button, Checkbox, Image } from "native-base";
-import React from "react";
+import React, {useState} from "react";
 import {
   SafeAreaView,
   StatusBar,
@@ -14,6 +14,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 function Que1NewStudent({ navigation }) {
   const insets = useSafeAreaInsets();
+  //states
+  const [courseInterested, setCourseInterested] = useState(null);
+
   return (
     <SafeAreaView
       style={[
@@ -74,6 +77,7 @@ function Que1NewStudent({ navigation }) {
           <Button style={{ backgroundColor: "#D4C00B", fontWeight: "400" }}>
             <Checkbox
               style={{ borderColor: "black", backgroundColor: "transparent" }}
+              onChange={()=>setCourseInterested(true)}
             >
               Yes
             </Checkbox>
@@ -81,6 +85,7 @@ function Que1NewStudent({ navigation }) {
           <Button style={{ backgroundColor: "#D4C00B", fontWeight: "400" }}>
             <Checkbox
               style={{ borderColor: "black", backgroundColor: "transparent" }}
+              onChange={()=>setCourseInterested(false)}
             >
               No
             </Checkbox>
@@ -97,7 +102,7 @@ function Que1NewStudent({ navigation }) {
               borderRadius: 10,
               marginTop: 20,
             }}
-            onPress={() => navigation.navigate("student-que2")}
+            onPress={() => navigation.navigate("student-que2", {courseInterested: courseInterested})}
           >
             <FontAwesomeIcon
               style={{

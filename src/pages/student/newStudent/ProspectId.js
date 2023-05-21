@@ -5,8 +5,10 @@ import React from "react";
 import { StatusBar, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-function ProspectId({ navigation }) {
+function ProspectId({navigation, route}) {
   const insets = useSafeAreaInsets();
+  const request_key = route.params.request_key;
+
   return (
     <View
       style={[
@@ -83,7 +85,7 @@ function ProspectId({ navigation }) {
           onPress={() => navigation.navigate("from-prospect-id")}
         >
           <View style={{ display: "flex", justifyContent: "space-around" }}>
-            <Text style={{ fontWeight: "400", fontSize: 22 }}>CEH12345</Text>
+            <Text style={{ fontWeight: "400", fontSize: 22 }}>{request_key}</Text>
           </View>
         </Button>
         <Text
