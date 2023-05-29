@@ -42,9 +42,9 @@ function NewClientForm({ navigation }) {
     }
 
     const packet = {
-      "representative_name": representativeName,
-      "company_name": companyName,
-      "phone_number": phoneNumber,
+      representativeName,
+      companyName,
+      phoneNumber,
       email,
       address,
       requirement,
