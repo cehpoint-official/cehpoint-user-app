@@ -11,6 +11,7 @@ import {
 import React, { useState } from "react";
 import { Alert, StatusBar, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {ApiURL} from "../../../../App";
 
 function NewClientForm({ navigation }) {
   const insets = useSafeAreaInsets();
@@ -27,7 +28,7 @@ function NewClientForm({ navigation }) {
   const [budget, setBudget] = useState('');
 
   async function callAPI(){
-    const url = 'http://127.0.0.1:5000/newclientdetails';
+    const url =  ApiURL + '/newclientdetails';
     
     const phoneRegex = /^[0-9]{10}$/;
     const budgetRegex = /^[0-9]+(\.[0-9]+)?$/;

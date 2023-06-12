@@ -51,6 +51,7 @@ import OldStudentForm from "./src/pages/student/oldStudent/OldStudentForm";
 import StudentCheck from "./src/pages/student/StudentCheck";
 
 const Stack = createNativeStackNavigator();
+export const ApiURL = 'http://18.191.238.75:5000';
 
 export default function App() {
   return (

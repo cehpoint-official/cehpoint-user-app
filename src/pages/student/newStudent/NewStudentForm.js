@@ -12,6 +12,7 @@ import {
 import React, {useState} from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ApiURL } from "../../../../App";
 
 function NewStudentFrom(navigation) {
   const insets = useSafeAreaInsets();
@@ -26,7 +27,7 @@ function NewStudentFrom(navigation) {
   const [source, setSource] = useState(null);
 
   async function callAPI(){
-    const url = 'http://127.0.0.1:5000/newstudentdetails';
+    const url = ApiURL +  '/newstudentdetails';
     
     const params = navigation.route.params;
     const packet = {
