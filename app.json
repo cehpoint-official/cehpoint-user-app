@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "cehpoint",
-    "slug": "cehpoint",
+    "slug": "cehpoint-user-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -34,11 +34,12 @@
     },
     "extra": {
       "eas": {
-        "projectId": "9bd41795-73c9-465d-83fd-4c34c1550579"
+        "projectId": "6d74e269-dee4-42e3-9c2f-5832de0f7474"
       }
     },
     "runtimeVersion": {
       "policy": "sdkVersion"
-    }
+    },
+    "owner": "yogicodes"
   }
 }
