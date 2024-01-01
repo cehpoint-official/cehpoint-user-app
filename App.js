@@ -60,9 +60,9 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{ headerShown: false }}
-            initialRouteName="home"
+            // initialRouteName="home"
           >
-            <Stack.Screen name="home" component={Home} />
+            {/* <Stack.Screen name="home" component={Home} /> */}
             <Stack.Screen name="check-user" component={CheckUser} />
             <Stack.Screen name="check-student" component={StudentCheck} />
             <Stack.Screen name="student-que1" component={Que1NewStudent} />

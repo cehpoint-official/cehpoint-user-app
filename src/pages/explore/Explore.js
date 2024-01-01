@@ -326,20 +326,6 @@ function Explore({ navigation }) {
           </Text>
         </View>
       </ScrollView>
-      <Image
-        source={require("../../../assets/images/fast-forward.gif")}
-        alt="free-serveic"
-        style={{
-          width: 50,
-          height: 50,
-          paddingTop: 10,
-          zIndex: 44,
-          position: "absolute",
-          bottom: 50,
-          left: "44%",
-          transform: [{ rotate: "270deg" }],
-        }}
-      />
       {/* <Button
         style={{
           backgroundColor: "white",
@@ -367,7 +353,7 @@ function Explore({ navigation }) {
       <TouchableOpacity onPress={onOpen}>
         <Text>jobs andsdsdd dsds intern</Text>
       </TouchableOpacity>
-      <Modalize
+      {/* <Modalize
         ref={modalizeRef}
         // snapPoint={300}
         // modalHeight={600}
@@ -384,7 +370,7 @@ function Explore({ navigation }) {
         <ScrollView>
           <JobsAndIntern />
         </ScrollView>
-      </Modalize>
+      </Modalize> */}
 
       {/* <RBSheet
         ref={refRBSheet}
