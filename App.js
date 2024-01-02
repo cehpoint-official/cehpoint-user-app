@@ -62,7 +62,7 @@ export default function App() {
             screenOptions={{ headerShown: false }}
             // initialRouteName="home"
           >
-            {/* <Stack.Screen name="home" component={Home} /> */}
+            {/* <Stack.Screen name="home" component={Home} />  */}
             <Stack.Screen name="check-user" component={CheckUser} />
             <Stack.Screen name="check-student" component={StudentCheck} />
             <Stack.Screen name="student-que1" component={Que1NewStudent} />
