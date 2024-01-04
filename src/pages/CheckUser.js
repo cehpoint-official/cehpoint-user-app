@@ -26,99 +26,55 @@ function CheckUser({ navigation }) {
       <StatusBar hidden={false} backgroundColor={"transparent"} barStyle={"dark-content"} translucent />
 
       <View style={{
-          display: "flex",
-          alignItems: "center",
-          width: "100%",
-          paddingHorizontal: 20,
-        }}
+        alignItems: "center",
+        justifyContent: "space-between",
+        width: "100%",
+        paddingHorizontal: 20,
+        height: "100%"
+      }}
       >
         <Image
-          style={{ height: 120, width: 120, marginTop: 60 }}
-          source={require("../../assets/splash.png")}
+          style={{ height: 150, width: 150, marginTop: 60 }}
+          source={require("../../assets/images/small-logo.png")}
           alt="home-image"
         />
 
-        <Button
-          style={{
-            marginTop: 60,
-            backgroundColor: "#D4C00B",
-            borderRadius: 10,
-          }}
-          w="100%"
-          size="sm"
-          onPress={() => navigation.navigate("check-student")}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "center",
-            }}
-          >
-            <Text
-              style={{
-                paddingEnd: 10,
-                paddingRight: 20,
-              }}
-            >
-              <FontAwesomeIcon
-                style={{
-                  color: "black",
-                }}
-                icon={faUserGraduate}
-                size={28}
-              />
-            </Text>
-            <Text style={{ fontWeight: "400", fontSize: 22 }}>
-              I am a Student
-            </Text>
-          </View>
-        </Button>
+        <View style={styles.btnContainer}>
 
-        <Text style={{ paddingVertical: 40, fontWeight: "400", fontSize: 22 }}>
-          OR
-        </Text>
-        <Button
-          style={{
-            backgroundColor: "#D4C00B",
-            borderRadius: 10,
-          }}
-          w="100%"
-          size="sm"
-          onPress={() => navigation.navigate("check-client")}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "center",
-            }}
-          >
-            <Text
-              style={{
-                paddingEnd: 10,
-                paddingRight: 20,
-              }}
-            >
-              <FontAwesomeIcon
-                style={{
-                  color: "black",
-                }}
-                icon={faUserTie}
-                size={28}
-              />
-            </Text>
-            <Text style={{ fontWeight: "400", fontSize: 22 }}>
-              I am a Client
-            </Text>
-          </View>
-        </Button>
+          <Text style={{ color: "white", fontSize: 30, fontWeight: "500" }}>Welcome to,</Text>
 
+          <Text style={{ color: "black", fontSize: 45, fontWeight: "bold" }}>CEHPONT</Text>
 
-        <Pressable style={[styles.btn,{backgroundColor:"black"}]} onPress={() => navigation.navigate("explore")}>
-          <FontAwesomeIcon style={{ color: "#D4C00B" }} icon={faCompass} />
-          <Text style={[styles.btnText,{ color: "white" }]}> Explore CEHPONT </Text>
-        </Pressable>
+          <View style={{ height: "5%" }}></View>
+
+          <Pressable style={[styles.btn, { backgroundColor: "white" }]} onPress={() => navigation.navigate("check-student")}>
+            <FontAwesomeIcon style={{ color: "black", }} size={20} icon={faUserGraduate} />
+            <View style={styles.gapH}></View>
+            <Text style={[styles.btnText, { color: "black" }]}> Continue  a Student </Text>
+          </Pressable>
+
+          <View style={styles.gapV}></View>
+
+          <Pressable style={[styles.btn, { backgroundColor: "white" }]} onPress={() => navigation.navigate("check-client")}>
+            <FontAwesomeIcon style={{ color: "black", }} size={20} icon={faUserTie} />
+            <View style={styles.gapH}></View>
+            <Text style={[styles.btnText, { color: "black" }]}> Continue  a Client </Text>
+          </Pressable>
+
+          <View style={styles.gapV}></View>
+
+          <Text style={[styles.btnText]}>- or -</Text>
+
+          <View style={styles.gapV}></View>
+
+          <Pressable style={[styles.btn, { backgroundColor: "black" }]} onPress={() => navigation.navigate("explore")}>
+            <FontAwesomeIcon style={{ color: "#D4C00B" }} icon={faCompass} />
+            <View style={styles.gapH}></View>
+            <Text style={[styles.btnText, { color: "white" }]}> Explore CEHPONT </Text>
+          </Pressable>
+
+        </View>
+
 
       </View>
     </View>
@@ -127,11 +83,19 @@ function CheckUser({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#f0c000"
+  },
+  gapH: { width: "2%" },
+  gapV: { height: "2%" },
+
+  btnContainer: {
+    width: "100%",
+    justifyContent: "center",
   },
   btn: {
     width: "100%",
     borderRadius: 8,
-    height: "10%",
+    height: "12%",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
